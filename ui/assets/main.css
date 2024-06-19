@@ -577,12 +577,16 @@ video {
     margin-bottom: auto;
   }
 
+  .lg\:basis-1\/2 {
+    flex-basis: 50%;
+  }
+
   .lg\:basis-1\/4 {
     flex-basis: 25%;
   }
 
-  .lg\:basis-1\/2 {
-    flex-basis: 50%;
+  .lg\:basis-full {
+    flex-basis: 100%;
   }
 
   .lg\:flex-row {
