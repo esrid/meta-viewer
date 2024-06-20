@@ -12,10 +12,10 @@ templ Home() {
 		</head>
 		<body>
 			<section class="flex flex-col justify-center lg:justify-start lg:flex-row">
-				<form class="lg:my-auto lg:basis-1/4" enctype="multipart/form-data" hx-post="/upload" hx-trigger="change from:.fileupload">
+				<form class="lg:my-auto lg:basis-1/4" enctype="multipart/form-data" hx-post="/upload" hx-trigger="change from:.fileupload" hx-swap="#tablist">
 					@inputfile()
 				</form>
-				<div class="lg:basis-full bg-violet-400">
+				<div class="lg:basis-full bg-violet-400" id="tablist">
 					DIV 2
 				</div>
 			</section>

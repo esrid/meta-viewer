@@ -11,8 +11,8 @@ const (
 	exifVersion string = "ExifTool Version Number"
 )
 
-func READATA() (map[string]string, error) {
-	cmd := exec.Command("exiftool", "./oks.html")
+func READATA(filepath string) (map[string]string, error) {
+	cmd := exec.Command("exiftool", filepath)
 	var out, outerr bytes.Buffer
 
 	cmd.Stdout = &out
