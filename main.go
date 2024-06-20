@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"net/http"
 	"os/exec"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/keen-c/meta/ui"
@@ -35,5 +37,13 @@ func xxx() {
 	if err := cmd.Run(); err != nil {
 		panic(err)
 	}
-	fmt.Printf("out.String(): %v\n", out.String())
+	outputmap := map[string]string{}
+	scanner := bufio.NewScanner(&out)
+	for scanner.Scan() {
+		astr := strings.Split(scanner.Text(), ":")
+		outputmap[astr[0]] = astr[1]
+	}
+	for key, value := range outputmap {
+		fmt.Printf("%s : %s \n", key, value)
+	}
 }
