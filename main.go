@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"net/http"
+	"os/exec"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/keen-c/meta/ui"
@@ -9,6 +12,7 @@ import (
 )
 
 func main() {
+	xxx()
 	r := chi.NewRouter()
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.FS(assets.FS))))
 
@@ -19,4 +23,17 @@ func main() {
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		panic(err)
 	}
+}
+
+func xxx() {
+	cmd := exec.Command("exiftool", "./oks.html")
+	var out, outerr bytes.Buffer
+
+	cmd.Stdout = &out
+	cmd.Stderr = &outerr
+
+	if err := cmd.Run(); err != nil {
+		panic(err)
+	}
+	fmt.Printf("out.String(): %v\n", out.String())
 }
