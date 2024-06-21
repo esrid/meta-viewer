@@ -599,10 +599,6 @@ video {
   width: 100%;
 }
 
-.max-w-3xl {
-  max-width: 48rem;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -658,11 +654,6 @@ video {
 .bg-green-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
-}
-
-.bg-violet-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(167 139 250 / var(--tw-bg-opacity));
 }
 
 .bg-violet-100 {
