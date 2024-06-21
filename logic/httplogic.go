@@ -44,7 +44,7 @@ func FileUpload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := READATA(tf.Name())
+	data, err := (tf.Name())
 	if err != nil {
 		http.Error(w, "Status Internal Server Error", http.StatusInternalServerError)
 		return

@@ -3,7 +3,6 @@ package logic
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -74,31 +73,51 @@ var options = []string{
 	"-file",
 }
 
-func READATA(filepath string) (map[string]string, error) {
-	cmd := exec.Command("exiftool", fmt.Sprintf("%s", filepath))
-	var out, outerr bytes.Buffer
+type ExifTool struct {
+	options []string
+}
 
+func (e *ExifTool) New(filename string) (bytes.Buffer, bytes.Buffer, error) {
+	cmd := exec.Command("exiftool", filename)
+	var out, outErr bytes.Buffer
+	cmd.Stderr = &outErr
 	cmd.Stdout = &out
-	cmd.Stderr = &outerr
-
 	if err := cmd.Run(); err != nil {
-		return map[string]string{}, err
+		return bytes.Buffer{}, bytes.Buffer{}, err
 	}
+	return out, out, nil
+}
 
-	outputmap := map[string]string{}
-
+func (e *ExifTool) scanner(out bytes.Buffer) map[string]string {
+	outputMap := make(map[string]string)
 	scanner := bufio.NewScanner(&out)
+	if scanner.Scan() {
+		line := scanner.Text()
+		astr := strings.Split(line, ":")
 
-	for scanner.Scan() {
-		astr := strings.Split(scanner.Text(), ":")
+		key := astr[0]
+		value := astr[1]
 
-		if strings.TrimSpace(astr[0]) == exifVersion {
-			continue
-		}
-		key := strings.TrimSpace(astr[0])
-		value := strings.TrimSpace(astr[1])
-
-		outputmap[key] = value
+		outputMap[key] = value
 	}
-	return outputmap, nil
+	return outputMap
+}
+
+func containsoptions(str string, options []string) string {
+	for _, option := range options {
+		if strings.Contains(str, option) {
+			return option
+		}
+	}
+	return ""
+}
+
+func (e *ExifTool) parser(m map[string]string, options []string) map[string][]string {
+	outputMap := make(map[string][]string)
+	for k, v := range m {
+		if w := containsoptions(v, options); w != "" {
+			outputMap[k] = append(outputMap[k], v, w)
+		}
+	}
+	return outputMap
 }
