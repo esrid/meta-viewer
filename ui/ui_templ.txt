@@ -1,5 +1,5 @@
-<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><script src=\"https://unpkg.com/htmx.org@2.0.0\"></script><link href=\"static/main.css\" rel=\"stylesheet\"><title>meta viewers</title></head><body><section class=\"flex flex-col justify-center lg:justify-start lg:flex-row\"><form class=\"lg:my-auto lg:basis-1/4\" enctype=\"multipart/form-data\" hx-post=\"/upload\" hx-trigger=\"change from:.fileupload\" hx-swap=\"#tablist\">
-</form><div class=\"lg:basis-full bg-violet-400\" id=\"tablist\">DIV 2</div></section></body></html>
+<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><script src=\"https://unpkg.com/htmx.org@2.0.0\"></script><link href=\"static/main.css\" rel=\"stylesheet\"><title>meta viewers</title></head><body><section class=\"flex flex-col justify-center lg:justify-start lg:flex-row\"><form class=\"lg:my-auto lg:basis-1/4\" enctype=\"multipart/form-data\" hx-post=\"/upload\" hx-trigger=\"change from:.fileupload\" hx-swap=\"innerHTML\" hx-target=\"#tablist\">
+</form><div class=\"lg:basis-full bg-violet-100\">DVA<div class=\"max-h-3xl\" id=\"tablist\"></div></div></section></body></html>
 <div class=\"flow-root\"><dl class=\"-my-3 divide-y divide-gray-100 text-sm\">
 <div class=\"grid grid-cols-1 gap-1 py-3 even:bg-green-50 sm:grid-cols-3 sm:gap-4\"><dt class=\"font-medium text-gray-900\">
 </dt><dd class=\"text-gray-700 sm:col-span-2\">

@@ -3,6 +3,7 @@ package logic
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -12,7 +13,7 @@ const (
 )
 
 func READATA(filepath string) (map[string]string, error) {
-	cmd := exec.Command("exiftool", filepath)
+	cmd := exec.Command("exiftool", fmt.Sprintf("%s", filepath))
 	var out, outerr bytes.Buffer
 
 	cmd.Stdout = &out
