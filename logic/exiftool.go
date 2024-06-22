@@ -70,9 +70,14 @@ type ExifTool struct {
 	filename string
 	Options  []string
 }
+
 type Options func(*ExifTool)
 
-func :q
-()  {
-  
+func (e *ExifTool) NewExif(options ...Options) {
+}
+
+func Withfilename(filename string) Options {
+	return func(et *ExifTool) {
+		et.filename = filename
+	}
 }
