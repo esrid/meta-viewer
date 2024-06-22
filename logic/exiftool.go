@@ -73,7 +73,12 @@ type ExifTool struct {
 
 type Options func(*ExifTool)
 
-func (et *ExifTool) NewExif(options ...Options) {
+func (et *ExifTool) NewExif(options ...Options) *ExifTool {
+	exiftool := &ExifTool{}
+	for _, opt := range options {
+		opt(exiftool)
+	}
+	return exiftool
 }
 
 func Withfilename(filename string) Options {
@@ -84,6 +89,8 @@ func Withfilename(filename string) Options {
 
 func WithOptions(options ...string) Options {
 	return func(et *ExifTool) {
-		e
+		for _, opt := range options {
+			et.Options = append(et.Options, opt)
+		}
 	}
 }
