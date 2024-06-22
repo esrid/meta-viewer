@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -41,15 +42,16 @@ func FileUpload(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Status Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-
-	exif := ExifTool{filename: tf.Name()}
-	if err := exif.New(); err != nil {
+	exif, err := NewExif(
+		Withfilename(tf.Name()))
+	if err != nil {
+		fmt.Println("error inside new :", err.Error())
 		http.Error(w, "Status Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-	scan := exif.Scanner()
-	exif.Parser(scan)
-	ui.DataList(exif.Data).Render(r.Context(), w)
+
+	m := Scanner(exif.Stdout)
+	ui.DataList(m).Render(r.Context(), w)
 }
 
 // func Options(w http.ResponseWriter, r *http.Request) {

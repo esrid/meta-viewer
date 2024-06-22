@@ -24,13 +24,13 @@ templ Home() {
 	</html>
 }
 
-templ DataList(data map[string]string) {
+templ DataList(data map[string][]string) {
 	<div class="flow-root">
 		<dl class="-my-3 divide-y divide-gray-100 text-sm">
 			for key, value := range data {
 				<div class="grid grid-cols-1 gap-1 py-3 even:bg-green-50 sm:grid-cols-3 sm:gap-4">
 					<dt class="font-medium text-gray-900">{ key }</dt>
-					<dd class="text-gray-700 sm:col-span-2" hx-post="/option" hx-trigger="Click" hx-swap="noswap" value="test" name="test">{ value }</dd>
+					<dd class="text-gray-700 sm:col-span-2" hx-post="/option" hx-trigger="Click" hx-swap="noswap" value="test" name="test">{ value[0] } | { value[1] }</dd>
 				</div>
 			}
 		</dl>
