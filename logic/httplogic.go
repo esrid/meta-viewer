@@ -1,12 +1,10 @@
 package logic
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/keen-c/meta/ui"
 )
 
@@ -44,16 +42,17 @@ func FileUpload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := (tf.Name())
-	if err != nil {
+	exif := ExifTool{filename: tf.Name()}
+	if err := exif.New(); err != nil {
 		http.Error(w, "Status Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-
-	ui.DataList(data).Render(r.Context(), w)
+	scan := exif.Scanner()
+	exif.Parser(scan)
+	ui.DataList(exif.Data).Render(r.Context(), w)
 }
 
-func Options(w http.ResponseWriter, r *http.Request) {
-	param := chi.URLParam(r, "test")
-	fmt.Println(param)
-}
+// func Options(w http.ResponseWriter, r *http.Request) {
+// 	param := chi.URLParam(r, "test")
+// 	fmt.Println(param)
+// }
