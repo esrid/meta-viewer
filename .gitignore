@@ -1,2 +1,10 @@
-node_modules
-tmp/
+# Ignore node_modules directory
+node_modules/
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore environment variables file
+.env
+
