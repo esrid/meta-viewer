@@ -1,5 +1,12 @@
 package logic
 
+import (
+	"bytes"
+	"fmt"
+	"os/exec"
+	"strings"
+)
+
 const (
 	exifVersion string = "ExifTool Version Number"
 )
@@ -69,16 +76,30 @@ var options = []string{
 type ExifTool struct {
 	filename string
 	Options  []string
+	Stdout   bytes.Buffer
+	Stderr   bytes.Buffer
 }
 
 type Options func(*ExifTool)
 
-func (et *ExifTool) NewExif(options ...Options) *ExifTool {
+func (et *ExifTool) NewExif(options ...Options) (*ExifTool, error) {
 	exiftool := &ExifTool{}
+
 	for _, opt := range options {
 		opt(exiftool)
 	}
-	return exiftool
+	argums := strings.Join(et.Options, " ")
+
+	cmd := exec.Command("exiftool", fmt.Sprintf("%s %s", argums, exiftool.filename))
+
+	cmd.Stdout = &exiftool.Stdout
+	cmd.Stderr = &exiftool.Stderr
+
+	if err := cmd.Run(); err != nil {
+		return &ExifTool{}, err
+	}
+
+	return exiftool, nil
 }
 
 func Withfilename(filename string) Options {
@@ -93,4 +114,10 @@ func WithOptions(options ...string) Options {
 			et.Options = append(et.Options, opt)
 		}
 	}
+}
+
+func Scanner(Stdout bytes.Buffer) map[string][]string {
+	var outmap map[string][]string
+
+	return outmap
 }
