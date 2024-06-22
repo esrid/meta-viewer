@@ -89,16 +89,15 @@ func NewExif(options ...Options) (*ExifTool, error) {
 	for _, opt := range options {
 		opt(exiftool)
 	}
-	argums := strings.Join(exiftool.Options, " ")
-	fmt.Println(fmt.Sprintf("%s %s", argums, exiftool.filename))
+	// argums := strings.Join(exiftool.Options, " ")
 
-	cmd := exec.Command("exiftool", fmt.Sprintf("%s %s", argums, exiftool.filename))
+	cmd := exec.Command("exiftool", fmt.Sprintf("%s", exiftool.filename))
 
 	cmd.Stdout = &exiftool.Stdout
 	cmd.Stderr = &exiftool.Stderr
 
 	if err := cmd.Run(); err != nil {
-		return &ExifTool{}, err
+		return nil, err
 	}
 
 	return exiftool, nil
@@ -151,7 +150,7 @@ func Scanner(Stdout bytes.Buffer) map[string][]string {
 func containsOptions(str string, Sslice []string) string {
 	var opts []string
 	for _, value := range Sslice {
-		if str == value {
+		if exist := strings.Contains(str, value); exist {
 			opts = append(opts, value)
 		}
 	}

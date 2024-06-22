@@ -18,6 +18,7 @@ func main() {
 		ui.Home().Render(r.Context(), w)
 	})
 	r.Post("/upload", logic.FileUpload)
+	r.Get("/option/{params}", logic.OptionsPost)
 
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		panic(err)

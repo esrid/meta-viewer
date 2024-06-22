@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-chi/chi/v5"
+
 	"github.com/keen-c/meta/ui"
 )
 
@@ -54,7 +56,7 @@ func FileUpload(w http.ResponseWriter, r *http.Request) {
 	ui.DataList(m).Render(r.Context(), w)
 }
 
-// func Options(w http.ResponseWriter, r *http.Request) {
-// 	param := chi.URLParam(r, "test")
-// 	fmt.Println(param)
-// }
+func OptionsPost(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("this is getting it")
+	_ = chi.URLParam(r, "params")
+}

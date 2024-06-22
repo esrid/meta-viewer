@@ -1,5 +1,7 @@
 package ui
 
+import "fmt"
+
 templ Home() {
 	<!DOCTYPE html>
 	<html lang="en">
@@ -30,7 +32,12 @@ templ DataList(data map[string][]string) {
 			for key, value := range data {
 				<div class="grid grid-cols-1 gap-1 py-3 even:bg-green-50 sm:grid-cols-3 sm:gap-4">
 					<dt class="font-medium text-gray-900">{ key }</dt>
-					<dd class="text-gray-700 sm:col-span-2" hx-post="/option" hx-trigger="Click" hx-swap="noswap" value="test" name="test">{ value[0] } | { value[1] }</dd>
+					switch len(value) {
+						case 1 :
+							<dd class="text-gray-700 sm:col-span-2">{ value[0] } </dd>
+						case 2:
+							<dd class="text-gray-700 sm:col-span-2" hx-post={ fmt.Sprintf("/option/%s", value[1]) } hx-swap="noswap">{ value[0] } </dd>
+					}
 				</div>
 			}
 		</dl>
