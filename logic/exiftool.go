@@ -73,11 +73,17 @@ type ExifTool struct {
 
 type Options func(*ExifTool)
 
-func (e *ExifTool) NewExif(options ...Options) {
+func (et *ExifTool) NewExif(options ...Options) {
 }
 
 func Withfilename(filename string) Options {
 	return func(et *ExifTool) {
 		et.filename = filename
+	}
+}
+
+func WithOptions(options ...string) Options {
+	return func(et *ExifTool) {
+		e
 	}
 }
